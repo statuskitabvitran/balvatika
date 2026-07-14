@@ -1973,5 +1973,35 @@ document.getElementById("exportBtnSchool").addEventListener("click",()=>exportMo
 })();
 
 </script>
+  <!-- ===== Guidelines modal (shows on every visit) ===== -->
+<div id="guidelinesOverlay" style="position:fixed;inset:0;z-index:9999;background:rgba(18,40,76,.55);display:flex;align-items:center;justify-content:center;padding:16px;">
+  <div role="dialog" aria-modal="true" aria-labelledby="glTitle"
+       style="background:#fff;max-width:640px;width:100%;max-height:88vh;overflow:auto;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.3);border-top:6px solid #E87722;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 8px;">
+      <h2 id="glTitle" style="margin:0;font-size:19px;color:#12284C;font-weight:700;">
+        कृपया ध्यान दें / Please note
+      </h2>
+      <button onclick="document.getElementById('guidelinesOverlay').remove()"
+              aria-label="बंद करें"
+              style="flex:none;border:none;background:#12284C;color:#fff;width:32px;height:32px;border-radius:8px;font-size:18px;line-height:1;cursor:pointer;">×</button>
+    </div>
+    <ol style="margin:6px 0 4px;padding:0 22px 4px 40px;color:#1c2b45;font-size:15px;line-height:1.65;">
+      <li style="margin-bottom:12px;">बिना लॉगिन किए BSA, BEO एवं HM स्कैन न करें।</li>
+      <li style="margin-bottom:12px;">Holistic Progress Card हेतु केवल एक बार स्कैन करते हुए तीनों आयुवर्गों के लिए प्राप्त कुल संख्या दर्ज करें। आयुवर्गवार अलग-अलग Holistic Progress Card की संख्या दर्ज न करें।</li>
+      <li style="margin-bottom:12px;">यदि कोई सामग्री 2 भागों में प्राप्त होती है — तो दोनों बार स्कैन करें एवं अंतिम बार संख्या भरते समय कुल प्राप्त संख्या भरें (सभी भागों में मिलाकर उक्त सामग्री का जोड़)।</li>
+      <li style="margin-bottom:4px;">लॉगिन विवरण एवं पूर्ण जानकारी के लिए यूजर मैनुअल डाउनलोड करें:
+        <a href="https://drive.google.com/file/d/1392wo37puPyNEUn_KHOrxfjzGoEFziuM/view" target="_blank" rel="noopener"
+           style="color:#E87722;font-weight:600;text-decoration:underline;">यूजर मैनुअल</a>
+      </li>
+    </ol>
+    <div style="padding:6px 22px 20px;text-align:right;">
+      <button onclick="document.getElementById('guidelinesOverlay').remove()"
+              style="background:#E87722;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+        Done
+      </button>
+    </div>
+  </div>
+</div>
+<!-- ===== /Guidelines modal ===== -->
 </body>
 </html>
