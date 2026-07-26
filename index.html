@@ -1715,52 +1715,6 @@ function fillSchoolBlkSel(){
   sel.value=schoolBlk;
 }
 
-/* ---- data audit: what the roll-up found in the work order ---- */
-function renderAudit(){
-  const el=document.getElementById("auditBlock"); if(!el) return;
-  const I=INTEGRITY;
-  const items=[];
-
-  items.push(I.dupUdise===0
-    ? `<div class="audit-item"><span class="flag flag-clear">clear</span><b>${fmt(I.schools)} UDISE codes, no duplicates.</b> Every school is counted once, so no block or district total can be inflated by a repeated row.</div>`
-    : `<div class="audit-item"><span class="flag flag-note">note</span><b>${fmt(I.dupUdise)} UDISE codes appear more than once.</b> Repeats were merged into a single school before totalling.</div>`);
-
-  items.push(`<div class="audit-item"><span class="flag flag-clear">clear</span><b>${fmt(I.blocks)} blocks across ${I.districts} districts, carrying ${fmt(I.codes)} distinct block codes.</b> Each block is held under its district + code + name, so two blocks can never merge because they share one of the three.<span class="sub">Block sizes run from ${I.minSchools} to ${fmt(I.maxSchools)} schools; ${I.tinyBlocks} blocks have fewer than 5 (these are municipal areas).</span></div>`);
-
-  if(I.crossDistrictCodes.length===0)
-    items.push(`<div class="audit-item"><span class="flag flag-clear">clear</span><b>No block code is reused across districts.</b> A scan sheet keyed on Block_Code alone will land in the right district.</div>`);
-  else
-    items.push(`<div class="audit-item"><span class="flag flag-note">note</span><b>${I.crossDistrictCodes.length} block codes appear in more than one district:</b> <code>${I.crossDistrictCodes.join("</code> <code>")}</code>. These are matched on district + block name instead.</div>`);
-
-  (I.sharedCodes||[]).forEach(s=>{
-    items.push(`<div class="audit-item"><span class="flag flag-note">note</span><b>Code <code>${escHtml(s.code)}</code> covers ${s.names.length} separate blocks in ${escHtml(s.district)}.</b> They are kept apart by name rather than collapsed into one row, and scan sheets for them are matched on district + block name.<span class="sub">${s.names.map(escHtml).join(" · ")}</span></div>`);
-  });
-
-  (I.splitNames||[]).forEach(s=>{
-    items.push(`<div class="audit-item"><span class="flag flag-note">note</span><b>${escHtml(s.district)} lists “${escHtml(s.name)}” under ${s.codes.length} different codes</b> (<code>${s.codes.map(escHtml).join("</code> <code>")}</code>), so it is shown as separate rows.</div>`);
-  });
-
-  if(I.udisePrefixMismatch>0)
-    items.push(`<div class="audit-item"><span class="flag flag-note">note</span><b>${I.udisePrefixMismatch} school${I.udisePrefixMismatch>1?"s":""} carry a UDISE code from a different district</b> than the one they are listed under — usually a boundary transfer that the UDISE code has not caught up with. They are counted in the district the work order assigns them to.</div>`);
-
-  if(I.badUdise>0)
-    items.push(`<div class="audit-item"><span class="flag flag-note">note</span><b>${I.badUdise} rows have a malformed UDISE code.</b> They are still counted, but they cannot be matched to a school scan sheet.</div>`);
-
-  const flags=items.filter(s=>s.indexOf("flag-note")>=0).length;
-  el.innerHTML=`
-    <div class="audit-head" id="auditHead">
-      <span class="audit-caret">▶</span>
-      <div class="audit-sum">
-        <span class="as"><b>${fmt(I.schools)}</b> UDISE codes</span>
-        <span class="as"><b>${fmt(I.blocks)}</b> blocks</span>
-        <span class="as"><b>${fmt(I.codes)}</b> block codes</span>
-        <span class="as ${flags?"warn":"ok"}"><b>${flags}</b> ${flags===1?"thing to know":"things to know"}</span>
-      </div>
-    </div>
-    <div class="audit-body">${items.join("")}</div>`;
-  document.getElementById("auditHead").addEventListener("click",()=>el.classList.toggle("open"));
-}
-
 /* ---- render: Block ---- */
 function renderBlock(){
   if(!dataReady) return;
