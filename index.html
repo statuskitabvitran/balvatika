@@ -560,21 +560,6 @@
 
 
     <p class="footnote">
-    <b>Targets.</b> District targets are embedded from the district work order and are left exactly as issued.
-    Block and school targets are built bottom-up from the school work order dated <b>27 July 2026</b>: one row per
-    UDISE code, 71,877 schools, summed into 881 blocks. Because the district and school files are compiled
-    separately, a district roll-up of the school file will not always match the district work-order figure — both are
-    shown as issued rather than forced to agree. The <b>Data checks</b> panel on the Block screen reports what the
-    roll-up found in the file.
-    <b>Received.</b> Received figures come from your connected Google Sheet (read live, refreshed automatically) or an
-    uploaded CSV. District names and the nine title headers are matched by normalisation plus fuzzy matching, so
-    spelling differences (e.g. <code>Allahabad/Prayagraj</code>, <code>Nipun Talika/Taalika</code>) are reconciled
-    automatically. Block scans match on block code, schools on UDISE code. Any district not present in the data is
-    counted as <b>0 received</b> (not reached).
-    <b>Reading the cells.</b> Colour follows received share of target: <b>green above 80%</b>, <b>yellow 50–80%</b>,
-    <b>red below 50%</b>. A dot means no scan was reported; a dash means there is no target to report against.
-    Click any district for its full title-by-title breakdown. The sheet is read directly in your browser; nothing is
-    stored or sent anywhere else.
   </p>
 </div>
 
@@ -1765,7 +1750,6 @@ function renderAudit(){
   el.innerHTML=`
     <div class="audit-head" id="auditHead">
       <span class="audit-caret">▶</span>
-      <span class="audit-ttl">Data checks · work order ${escHtml(I.asOf)}</span>
       <div class="audit-sum">
         <span class="as"><b>${fmt(I.schools)}</b> UDISE codes</span>
         <span class="as"><b>${fmt(I.blocks)}</b> blocks</span>
